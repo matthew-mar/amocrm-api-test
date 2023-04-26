@@ -3,6 +3,12 @@
     "description": "AmoCrm API client",
     "type": "library",
     "license": "proprietary",
+    "repositories": {
+        "gitlab.qsoft.ru/1142": {
+          "type": "composer",
+          "url": "https://gitlab.qsoft.ru/api/v4/group/1142/-/packages/composer/packages.json"
+        }
+    },
     "require": {
         "php": "8.1.*",
         "illuminate/support": "^8.0",
@@ -11,7 +17,9 @@
         "illuminate/console": "^8.83",
         "illuminate/container": "^8.83",
         "laravel/helpers": "^1.6",
-        "amocrm/oauth2-amocrm": "^2.0"
+        "amocrm/oauth2-amocrm": "^2.0",
+        "intranet-packages/connector": "^8.0",
+        "intranet-packages/database": "^8.1"
     },
     "autoload": {
       "psr-4": {
@@ -28,5 +36,8 @@
       }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+      "gitlab-domains": ["gitlab.qsoft.ru"]
+    }
 }

@@ -4,6 +4,7 @@ namespace Intranet\AmoCrmApi\Commands;
 
 use Illuminate\Console\Command;
 use Intranet\AmoCrmApi\Facades\AmoCrmApi;
+use Intranet\AmoCrmApi\Services\AmoCrmIntegrationService;
 
 class AuthorizeIntegration extends Command
 {
@@ -16,7 +17,7 @@ class AuthorizeIntegration extends Command
 
     public $description = 'Authorize integration with Amo Crm';
 
-    public function handle()
+    public function handle(AmoCrmIntegrationService $service)
     {
         $baseDomain = $this->argument('base_domain');
         $clientId = $this->argument('client_id');
@@ -25,9 +26,27 @@ class AuthorizeIntegration extends Command
         $authorizationCode = $this->argument('authorization_code');
 
         $client = AmoCrmApi::init($baseDomain, $clientId, $clientSecret, $redirectUri);
-        
+
         $accessToken = $client->system->authorizeByCode($authorizationCode);
 
-        var_dump($accessToken);
+        if (! $accessToken->hasExpired()) {
+            $fields = [
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+                'base_domain' => $baseDomain,
+                'redirect_uri' => $redirectUri,
+                'auth' => json_encode([
+                    'expires' => $accessToken->getExpires(),
+                    'access_token' => $accessToken->getToken(),
+                    'refresh_token' => $accessToken->getRefreshToken(),
+                ]),
+            ];
+
+            if (! $service->create($fields)) {
+                throw new \Exception('failed create integration');
+            }
+        }
+
+        $this->info('integration authorize successfully');
     }
 }

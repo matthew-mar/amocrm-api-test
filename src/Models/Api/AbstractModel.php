@@ -1,6 +1,6 @@
 <?php
 
-namespace Intranet\AmoCrmApi\Models;
+namespace Intranet\AmoCrmApi\Models\Api;
 
 use AmoCRM\OAuth2\Client\Provider\AmoCRM;
 

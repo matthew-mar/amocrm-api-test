@@ -7,7 +7,7 @@ use AmoCRM\OAuth2\Client\Provider\AmoCRM;
 use Intranet\AmoCrmApi\Exceptions\ApiModelNotFound;
 
 /**
- * @property \Intranet\AmoCrmApi\Models\System $system
+ * @property \Intranet\AmoCrmApi\Models\Api\System $system
  */
 class Client
 {
@@ -28,12 +28,10 @@ class Client
 
     public function __get($name)
     {
-        $model = App::make("amocrm.model.{$name}", [$this->provider]) ?? null;
-
-        if (! $model) {
+        if (! app()->has("amocrm.model.{$name}")) {
             throw new ApiModelNotFound();
         }
 
-        return $model;
+        return app("amocrm.model.{$name}", [$this->provider]);
     }
 }

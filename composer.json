@@ -1,0 +1,29 @@
+{
+    "name": "intranet-packages/amocrm-api-test",
+    "description": "AmoCrm API client",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+      "php": "8.1.*",
+      "illuminate/support": "^8.0",
+      "illuminate/database": "^8.0",
+      "illuminate/contracts": "^8.0",
+        "amocrm/oauth2-amocrm": "^2.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Intranet\\AmoCrmApi\\": [
+          "src/"
+        ]
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Intranet\\AmoCrmApi\\AmoCrmApiServiceProvider"
+        ]
+      }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

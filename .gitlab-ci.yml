@@ -1,0 +1,12 @@
+stages:
+  - deploy
+
+deploy:
+  image: registry.gitlab.qsoft.ru/system-software/k8s-tool:latest
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG && $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+  script:
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=${CI_COMMIT_TAG} "https://gitlab.qsoft.ru/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
+  tags:
+    - stage

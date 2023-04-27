@@ -1,10 +1,9 @@
 <?php
 
-namespace Intranet\AmoCrmApi\Repositories;
+namespace Intranet\Integration\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Intranet\Foundation\Support\Repository as BaseRepository;
-
 
 abstract class Repository extends BaseRepository
 {
